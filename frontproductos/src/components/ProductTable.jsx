@@ -1,9 +1,9 @@
 "use client"
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
+import { Button, ButtonGroup } from 'primereact/button';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { Toast } from 'primereact/toast';
@@ -13,6 +13,7 @@ const ProductTable = ({ products }) => {
   const router = useRouter();
   const [globalFilter, setGlobalFilter] = useState(null);
   const toast = useRef(null);
+  const [localProducts, setLocalProducts] = useState(products);
 
   //metodo para borrar
   const deleteProduct = async (productId) => {
@@ -29,7 +30,7 @@ const ProductTable = ({ products }) => {
 
   
     const accept = () => {
-        toast.current.show({ severity: 'info', summary: 'Cofirmado', detail: 'Se ha elimiado el producto con exito', life: 3000 });
+        toast.current.show({ severity: 'info', summary: 'Cofirmado', detail: 'Se ha eliminado el producto con exito', life: 3000 });
     }
     const reject = () => {
         toast.current.show({ severity: 'warn', summary: 'Rechazado', detail: 'Te has arrepentido de borrar el producto', life: 3000 });
@@ -38,7 +39,7 @@ const ProductTable = ({ products }) => {
   const confirm = (productId) => {
     confirmDialog({
       message: '¿Estás seguro de que quieres eliminar este producto?',
-      header: 'Delete Confirmation',
+      header: 'Confirmacion de eliminación',
       icon: 'pi pi-info-circle',
       defaultFocus: 'reject',
       acceptClassName: 'p-button-danger',
@@ -53,16 +54,16 @@ const ProductTable = ({ products }) => {
 
   //metodo para editar
   const editProduct = (productId) => {
-    router.push(`/productos/edit/${productId}`);
+    router.replace(`/productos/edit/${productId}`);
   };
 
   //botones.
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
-        <Button label="Editar" onClick={() => editProduct(rowData.id)} />
-        <Button onClick={() => confirm(rowData.id)} icon="pi pi-times" label="Delete" severity='danger' />
-
+ 
+        <Button label="Editar" style={{ marginRight: '10px' }} onClick={() => editProduct(rowData.id)} />
+        <Button onClick={() => confirm(rowData.id)} label="Eliminar" severity='danger' />
       </div>
     );
   };
@@ -70,13 +71,17 @@ const ProductTable = ({ products }) => {
 
   //buscador
   const header = (
-    <div>
-      <i className="pi pi-search mr-2" />
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+
+      
       <InputText
         type="search"
         onInput={(e) => setGlobalFilter(e.target.value)}
         placeholder="Buscar producto"
+        style={{ marginRight: '10px' }}
       />
+      <i className="pi pi-search mr-2" />
+
     </div>
   );
 
@@ -99,6 +104,7 @@ const ProductTable = ({ products }) => {
         <Column field="precio" header="Precio" sortable />
         <Column field="cantidad" header="Cantidad" sortable />
         <Column field="descripcion" header="Descripción" sortable />
+
         <Column
           body={actionBodyTemplate}
           header="Acciones"

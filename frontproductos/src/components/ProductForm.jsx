@@ -15,7 +15,9 @@ function ProductForm() {
     cantidad: 0,
     imagen: "",
   });
+  const [imageUrl, setImageUrl] = useState('');
   const [file, setFile] = useState(null);
+  const [errors, setErrors] = useState({});
   const form = useRef(null);
   const router = useRouter();
   const params = useParams();
@@ -26,6 +28,43 @@ function ProductForm() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+    if (!product.name) {
+      errors.name = "El nombre es requerido";
+      valid = false;
+    }
+
+    if (!product.price) {
+      errors.price = "El precio es requerido";
+      valid = false;
+    }else if (parseFloat(product.price) <= 0) {
+      errors.price = "El precio debe ser mayor que cero";
+      valid = false;
+    }
+
+    if (!product.cantidad) {
+      errors.cantidad = "La cantidad es requerida";
+      valid = false;
+    }else if (parseInt(product.cantidad) <= 0) {
+      errors.cantidad = "La cantidad debe ser mayor que cero";
+      valid = false;
+    }
+
+    if (!product.description) {
+      errors.description = "La descripción es requerida";
+      valid = false;
+    }
+
+
+    setErrors(errors);
+
+    return valid;
+  };
+
 
   useEffect(() => {
     if (params.id) {
@@ -49,6 +88,11 @@ function ProductForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
 
     const formData = new FormData();
     formData.append("nombre", product.name);
@@ -78,7 +122,7 @@ function ProductForm() {
   };
 
   return (
-    <div className="card ">
+    <div className="card">
       <form
         onSubmit={handleSubmit}
         ref={form}
@@ -86,74 +130,77 @@ function ProductForm() {
         <label
           htmlFor="name"
         >
-          Product Name:
+          Nombre:
         </label>
         <InputText
           name="name"
           type="text"
-          placeholder="name"
+          placeholder="nombre"
           onChange={handleChange}
           value={product.name}
         />
+         {errors.name && <small className="p-error">{errors.name}</small>}
 
         <label
           htmlFor="price"
         >
-          Product Price:
+          Precio:
         </label>
         <InputText
           name="price"
           type="text"
           keyfilter="money"
-
-          placeholder="0"
           onChange={handleChange}
           value={product.price}
         />
+        {errors.price && <small className="p-error">{errors.price}</small>}
+
         <label
           htmlFor="cantidad"
         >
-          Product cantidad:
+          Cantidad:
         </label>
         <InputText
           name="cantidad"
           type="text"
           keyfilter="int"
-          placeholder="0"
           onChange={handleChange}
           value={product.cantidad}
         />
+        {errors.cantidad && <small className="p-error">{errors.cantidad}</small>}
 
         <label
           htmlFor="name"
         >
-          Product Description:
+          Description:
         </label>
         <InputTextarea
           name="description"
           rows={3}
-          placeholder="description"
+          placeholder="descripcion"
           onChange={handleChange}
           value={product.description}
         />
+        {errors.description && <small className="p-error">{errors.description}</small>}
+
         <label
           htmlFor="name"
         >
-          Product imgane:
+          Url de la imagen:
         </label>
         <textarea
           name="imagen"
           rows={3}
           placeholder="url imagen"
           onChange={handleChange}
-          value={product.imagen}
+          value={product.imagen} 
         />
 
        
     
 
         <Button>
-          {params.id ? "Update Product" : "Create Product"}
+          {params.id ? "Actualizar Producto" : "Agregar Producto"}
         </Button>
       </form>
     </div>
