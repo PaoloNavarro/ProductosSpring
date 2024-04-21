@@ -27,25 +27,29 @@ const ProductTable = ({ products }) => {
     }
   };
 
+  
     const accept = () => {
-        toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'Se ha elimiado el producto con exito', life: 3000 });
+        toast.current.show({ severity: 'info', summary: 'Cofirmado', detail: 'Se ha elimiado el producto con exito', life: 3000 });
     }
-
     const reject = () => {
-        toast.current.show({ severity: 'warn', summary: 'Rejected', detail: 'Te has arrepentido de borrar el producto', life: 3000 });
+        toast.current.show({ severity: 'warn', summary: 'Rechazado', detail: 'Te has arrepentido de borrar el producto', life: 3000 });
     }
 
-  const confirm2 = (productId) => {
+  const confirm = (productId) => {
     confirmDialog({
       message: '¿Estás seguro de que quieres eliminar este producto?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       defaultFocus: 'reject',
       acceptClassName: 'p-button-danger',
-      accept: () => deleteProduct(productId),
-      reject
+      reject,
+      accept:() => {
+        deleteProduct(productId);
+        accept(); // Mostrar el toast después de eliminar el producto
+      }
     });
   };
+  
 
   //metodo para editar
   const editProduct = (productId) => {
@@ -55,9 +59,9 @@ const ProductTable = ({ products }) => {
   //botones.
   const actionBodyTemplate = (rowData) => {
     return (
-      <div className="card flex flex-wrap gap-2 justify-content-center">
+      <div>
         <Button label="Editar" onClick={() => editProduct(rowData.id)} />
-        <Button onClick={() => confirm2(rowData.id)} icon="pi pi-times" label="Delete" severity='danger' />
+        <Button onClick={() => confirm(rowData.id)} icon="pi pi-times" label="Delete" severity='danger' />
 
       </div>
     );
@@ -66,13 +70,12 @@ const ProductTable = ({ products }) => {
 
   //buscador
   const header = (
-    <div className="textAlign: 'left'">
+    <div>
       <i className="pi pi-search mr-2" />
       <InputText
         type="search"
         onInput={(e) => setGlobalFilter(e.target.value)}
         placeholder="Buscar producto"
-        className="border border-gray-300 rounded-md px-3 py-2"
       />
     </div>
   );
@@ -90,6 +93,7 @@ const ProductTable = ({ products }) => {
         globalFilter={globalFilter}
         header={header}
         emptyMessage="No se encontraron productos."
+        className='tabla'
       >
         <Column field="nombre" header="Nombre" sortable />
         <Column field="precio" header="Precio" sortable />
@@ -98,7 +102,7 @@ const ProductTable = ({ products }) => {
         <Column
           body={actionBodyTemplate}
           header="Acciones"
-          style={{ textAlign: 'center', width: '19em' }}
+          style={{ textAlign: 'center', width: '19em'  }}
           className="text-center"
         />
       </DataTable>

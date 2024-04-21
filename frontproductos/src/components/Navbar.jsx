@@ -1,23 +1,39 @@
-import Link from "next/link";
+"use client"
+import { Menubar } from 'primereact/menubar';
 
 
 function Navbar() {
-  return (
-    <nav className="bg-zinc-900 text-white py-3 mb-2">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/">
-          <h3 className="text-3xl">Productos</h3>
-        </Link>
+  const items = [
+    {
+      label: 'Productos',
+      icon: 'pi pi-home',
+      url: '/productos'
+    },
+    {
+      label: 'New Product',
+      icon: 'pi pi-plus',
+      command: () => { window.location.href = '/productos/new'; }
 
-        <ul>
-          <li>
-          
-            <a href="/productos/new"rel="noopener noreferrer" className="p-button font-bold">
-              Agregar Producto
-            </a>
-          </li>
-        </ul>
-      </div>
+    },
+    {
+      label: 'Productos',
+      icon: 'pi pi-search',
+      items: [
+        {
+          label: 'New Product',
+          icon: 'pi pi-plus',
+          command: () => { window.location.href = '/productos/new'; }
+        }
+      ]
+    }
+  ];
+
+  return (
+    <nav>
+        
+
+        <Menubar model={items} />
+      
     </nav>
   );
 }

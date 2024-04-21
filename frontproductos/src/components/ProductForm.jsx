@@ -2,6 +2,10 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+
 
 function ProductForm() {
   const [product, setProduct] = useState({
@@ -74,73 +78,66 @@ function ProductForm() {
   };
 
   return (
-    <div className="flex ">
+    <div className="card ">
       <form
-        className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
         ref={form}
       >
         <label
           htmlFor="name"
-          className="block text-gray-700 text-sm font-bold mb-2"
         >
           Product Name:
         </label>
-        <input
+        <InputText
           name="name"
           type="text"
           placeholder="name"
           onChange={handleChange}
           value={product.name}
-          className="shadow appearance-none border rounded w-full py-2 px-3"
         />
 
         <label
           htmlFor="price"
-          className="block text-gray-700 text-sm font-bold mb-2"
         >
           Product Price:
         </label>
-        <input
+        <InputText
           name="price"
           type="text"
-          placeholder="00.00"
+          keyfilter="money"
+
+          placeholder="0"
           onChange={handleChange}
           value={product.price}
-          className="shadow appearance-none border rounded w-full py-2 px-3"
         />
         <label
           htmlFor="cantidad"
-          className="block text-gray-700 text-sm font-bold mb-2"
         >
           Product cantidad:
         </label>
-        <input
+        <InputText
           name="cantidad"
           type="text"
+          keyfilter="int"
           placeholder="0"
           onChange={handleChange}
           value={product.cantidad}
-          className="shadow appearance-none border rounded w-full py-2 px-3"
         />
 
         <label
           htmlFor="name"
-          className="block text-gray-700 text-sm font-bold mb-2"
         >
           Product Description:
         </label>
-        <textarea
+        <InputTextarea
           name="description"
           rows={3}
           placeholder="description"
           onChange={handleChange}
           value={product.description}
-          className="shadow appearance-none border rounded w-full py-2 px-3"
         />
         <label
           htmlFor="name"
-          className="block text-gray-700 text-sm font-bold mb-2"
         >
           Product imgane:
         </label>
@@ -150,15 +147,14 @@ function ProductForm() {
           placeholder="url imagen"
           onChange={handleChange}
           value={product.imagen}
-          className="shadow appearance-none border rounded w-full py-2 px-3"
         />
 
        
     
 
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <Button>
           {params.id ? "Update Product" : "Create Product"}
-        </button>
+        </Button>
       </form>
     </div>
   );
