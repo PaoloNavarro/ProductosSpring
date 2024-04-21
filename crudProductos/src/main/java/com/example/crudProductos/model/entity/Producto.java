@@ -25,7 +25,7 @@ public class Producto implements Serializable {
     private double precio;
     @Column(name="cantidad")
     private int cantidad;
-    @Column(name = "imge",nullable = true)
+    @Column(name = "imge")
     private String imge;
 
 

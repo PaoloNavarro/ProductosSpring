@@ -1,7 +1,5 @@
 package com.example.crudProductos.controller;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.example.crudProductos.model.dto.ProductoDto;
 import com.example.crudProductos.model.entity.Producto;
 import com.example.crudProductos.service.IProducto;
@@ -23,7 +21,6 @@ public class ProductoController {
     @Autowired
     private IProducto productoService;
 
-    private Cloudinary cloudinary;
 
 
     @GetMapping("productos")
@@ -50,6 +47,7 @@ public class ProductoController {
     public ResponseEntity<?> create (@RequestBody ProductoDto productoDto){
         Producto productosave = null;
         try {
+
             productosave = productoService.save(productoDto);
             return new ResponseEntity<>(com.std.ec.model.payload.MensajeResponse.builder()
                     .mnesaje("Guardado correctamente")
@@ -57,9 +55,9 @@ public class ProductoController {
                             .id(productosave.getId())
                             .nombre(productosave.getNombre() )
                             .descripcion(productosave.getDescripcion())
+                            .imge(productosave.getImge())
                             .precio(productosave.getPrecio())
                             .cantidad(productosave.getCantidad())
-                            .imge(productosave.getImge())
                             .build())
                     .build()
                     , HttpStatus.CREATED);

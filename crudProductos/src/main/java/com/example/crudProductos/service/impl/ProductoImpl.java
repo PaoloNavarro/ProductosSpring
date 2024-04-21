@@ -29,6 +29,7 @@ public class ProductoImpl implements IProducto {
                 .descripcion(productoDto.getDescripcion())
                 .precio(productoDto.getPrecio())
                 .cantidad(productoDto.getCantidad())
+                .imge(productoDto.getImge())
                 .build();
         return productoDao.save(producto);
     }
