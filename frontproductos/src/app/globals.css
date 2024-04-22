@@ -1,40 +1,70 @@
 .card {
-    width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 20px;
-  }
+  width: 100%;
+  max-width: 500px;
+  margin: 5px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.card form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.card form input[type="text"],
+.card form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.card form input[type="text"]:focus,
+.card form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.card form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.card form button:hover {
+  background-color: #0056b3;
+}
+
+.p-error {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.p-invalid .p-error {
+  display: block;
+}
   
-  .card form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .card form input[type="text"],
-  .card form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* Para incluir el padding en el ancho total */
-  }
-  
-  .card form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .card form button:hover {
-    background-color: #0056b3;
-  }
-  
-  
+.navbar {
+  background-color: #333;
+  color: white;
+}
+
+.container-fluid {
+  padding: 20px;
+}
+
+

@@ -6,25 +6,14 @@ function Navbar() {
   const items = [
     {
       label: 'Productos',
-      icon: 'pi pi-home',
+      icon: 'pi pi-tag',
       url: '/productos'
     },
     {
-      label: 'New Product',
+      label: 'Agregar Producto',
       icon: 'pi pi-plus',
       command: () => { window.location.href = '/productos/new'; }
 
-    },
-    {
-      label: 'Productos',
-      icon: 'pi pi-search',
-      items: [
-        {
-          label: 'New Product',
-          icon: 'pi pi-plus',
-          command: () => { window.location.href = '/productos/new'; }
-        }
-      ]
     }
   ];
 

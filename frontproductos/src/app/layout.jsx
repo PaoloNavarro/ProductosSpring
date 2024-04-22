@@ -20,10 +20,21 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <head>
+        <style>{`
+          body {
+            font-family: ${inter};
+            background-color: #f4f4f4;
+          }
+          .container-fluid {
+            margin-top: 20px;
+          }
+        `}</style>
+      </head>
+      <body>
         <Navbar/>
         <div className="container-fluid">
-           {children}
+          {children}
         </div>
       </body>
     </html>
