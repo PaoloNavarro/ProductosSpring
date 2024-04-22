@@ -1,6 +1,11 @@
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+//import 'primereact/resources/themes/luna-amber/theme.css';
+//import 'primereact/resources/themes/nova/theme.css';
+//import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+//import 'primereact/resources/themes/md-light-indigo/theme.css';
+
 
 import "primeicons/primeicons.css";
 import 'primereact/resources/primereact.css';

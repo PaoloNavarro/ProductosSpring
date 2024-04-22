@@ -9,13 +9,24 @@ import { useRouter } from "next/navigation";
 import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 
-const ProductTable = ({ products }) => {
+const ProductTable = () => {
   const router = useRouter();
+  const [products, setProducts] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const toast = useRef(null);
-  const [localProducts, setLocalProducts] = useState(products);
 
-  //metodo para borrar
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios.get('http://localhost:8092/api/v1/productos');
+        setProducts(data.object);
+      } catch (error) {
+        console.error('Error al cargar los productos:', error);
+      }
+    }
+    fetchData(); // Llama a la función para cargar los productos cuando el componente se monta
+  }, []);
+
   const deleteProduct = async (productId) => {
     try {
       const res = await axios.delete(`http://localhost:8092/api/v1/producto/${productId}`);
@@ -28,13 +39,13 @@ const ProductTable = ({ products }) => {
     }
   };
 
-  
-    const accept = () => {
-        toast.current.show({ severity: 'info', summary: 'Cofirmado', detail: 'Se ha eliminado el producto con exito', life: 3000 });
-    }
-    const reject = () => {
-        toast.current.show({ severity: 'warn', summary: 'Rechazado', detail: 'Te has arrepentido de borrar el producto', life: 3000 });
-    }
+  const accept = () => {
+    toast.current.show({ severity: 'info', summary: 'Cofirmado', detail: 'Se ha eliminado el producto con éxito', life: 3000 });
+  };
+
+  const reject = () => {
+    toast.current.show({ severity: 'warn', summary: 'Rechazado', detail: 'Te has arrepentido de borrar el producto', life: 3000 });
+  };
 
   const confirm = (productId) => {
     confirmDialog({
@@ -44,36 +55,28 @@ const ProductTable = ({ products }) => {
       defaultFocus: 'reject',
       acceptClassName: 'p-button-danger',
       reject,
-      accept:() => {
+      accept: () => {
         deleteProduct(productId);
         accept(); // Mostrar el toast después de eliminar el producto
       }
     });
   };
-  
 
-  //metodo para editar
   const editProduct = (productId) => {
     router.replace(`/productos/edit/${productId}`);
   };
 
-  //botones.
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
- 
         <Button label="Editar" style={{ marginRight: '10px' }} onClick={() => editProduct(rowData.id)} />
         <Button onClick={() => confirm(rowData.id)} label="Eliminar" severity='danger' />
       </div>
     );
   };
 
-
-  //buscador
   const header = (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-
-      
       <InputText
         type="search"
         onInput={(e) => setGlobalFilter(e.target.value)}
@@ -81,7 +84,6 @@ const ProductTable = ({ products }) => {
         style={{ marginRight: '10px' }}
       />
       <i className="pi pi-search mr-2" />
-
     </div>
   );
 
@@ -104,7 +106,6 @@ const ProductTable = ({ products }) => {
         <Column field="precio" header="Precio" sortable />
         <Column field="cantidad" header="Cantidad" sortable />
         <Column field="descripcion" header="Descripción" sortable />
-
         <Column
           body={actionBodyTemplate}
           header="Acciones"

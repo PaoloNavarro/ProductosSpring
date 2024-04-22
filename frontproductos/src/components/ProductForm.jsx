@@ -114,12 +114,13 @@ function ProductForm() {
           'Content-Type': 'application/json'
         }
       });
+
     }
 
     form.current.reset();
     router.refresh();
-    router.push("/productos");
-  };
+    router.push("/productos") 
+   };
 
   return (
     <div className="card">
@@ -199,9 +200,10 @@ function ProductForm() {
        
     
 
-        <Button>
-          {params.id ? "Actualizar Producto" : "Agregar Producto"}
-        </Button>
+      <Button>
+        {params.id ? "Actualizar Producto" : "Agregar Producto"}
+      </Button>
+
       </form>
     </div>
   );
