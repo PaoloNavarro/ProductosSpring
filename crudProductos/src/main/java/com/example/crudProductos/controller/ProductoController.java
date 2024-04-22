@@ -146,6 +146,7 @@ public class ProductoController {
                                 .descripcion(producto.getDescripcion())
                                 .precio(producto.getPrecio())
                                 .cantidad(producto.getCantidad())
+                                .imge(producto.getImge())
                                 .build())
                         .build()
                 , HttpStatus.OK);

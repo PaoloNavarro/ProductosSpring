@@ -42,7 +42,6 @@ public class ProductoImpl implements IProducto {
     @Override
     public void delete(Producto producto) {
         productoDao.delete(producto);
-
     }
     @Override
     public boolean existsById(Integer id) {

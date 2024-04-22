@@ -15,8 +15,7 @@ function ProductForm() {
     cantidad: 0,
     imagen: "",
   });
-  const [imageUrl, setImageUrl] = useState('');
-  const [file, setFile] = useState(null);
+  
   const [errors, setErrors] = useState({});
   const form = useRef(null);
   const router = useRouter();
@@ -77,7 +76,7 @@ function ProductForm() {
           price: res.data.object.precio,
           description: res.data.object.descripcion,
           cantidad: res.data.object.cantidad,
-          imagen: res.data.object.image || ""
+          imagen: res.data.object.imge || ""
         });
 
       }).catch((error=>{
